@@ -3,19 +3,78 @@
   <entry>
     <title>Hello World</title>
     <url>/2020/05/02/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+    <content><![CDATA[<p>2020年5月2日加入<a href="https://github.com" target="_blank" rel="noopener">GitHub</a>  博客,记录自己的学习笔记。</p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>数据驱动</title>
+    <url>/2020/05/02/dataDriven/</url>
+    <content><![CDATA[<p>数据驱动是指vue中视图的更新是由数据变化引发的，我们不需要直接操作DOM结构</p>
+<p>本文目标：分析vue是如何将视图与数据进行关联</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span></span><br><span class="line">      &#123;&#123;msg&#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">let</span> app = <span class="keyword">new</span> Vue(&#123;</span></span><br><span class="line"><span class="actionscript">    el:<span class="string">'#app'</span>,</span></span><br><span class="line">    data:&#123;</span><br><span class="line"><span class="actionscript">       msg:<span class="string">'Vue'</span></span></span><br><span class="line">    &#125;</span><br><span class="line"> &#125;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="new-Vue（options）"><a href="#new-Vue（options）" class="headerlink" title="new Vue（options）"></a>new Vue（options）</h4><p>在new Vue时，只调用了<em>this._init(options)</em> 方法；</p>
+<p>在this._init()方法中又进行如下操作</p>
+<ol>
+<li><p>合并options操作  </p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line">vm.$options = mergeOptions(</span><br><span class="line"><span class="actionscript">        resolveConstructorOptions(vm.constructor),  <span class="comment">//</span></span></span><br><span class="line">        options || &#123;&#125;,</span><br><span class="line">        vm</span><br><span class="line">      )</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>总</strong>：将传入vue的options与vue构造函数中的的option合并，并挂载到vm.$options</p>
+</li>
+<li><p>initProxy()</p>
+</li>
+</ol>
+<ol start="3">
+<li><p>initLifecycle(vm)</p>
+</li>
+<li><p>initEvents()</p>
+</li>
+<li><p>initRender(vm)</p>
+</li>
+<li><p>callHook(vm, ‘beforeCreate’)</p>
+</li>
+<li><p>initInjections(vm)</p>
+</li>
+<li><p>initState(vm)</p>
+</li>
+<li><p>initProvide(vm)</p>
+</li>
+<li><p>callHook(vm, ‘created’)</p>
+</li>
+<li><p>vm.$mount(vm.$options.el)</p>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Computed属性</title>
+    <url>/2020/05/02/Computed%E5%B1%9E%E6%80%A7/</url>
+    <content><![CDATA[<h3 id="computed官方API"><a href="#computed官方API" class="headerlink" title="computed官方API"></a>computed官方API</h3><p><img src="image-20200423141327826.png" alt=""></p>
+<h3 id="initComputed源码"><a href="#initComputed源码" class="headerlink" title="initComputed源码"></a>initComputed源码</h3><p><img src="image-20200423142019878.png" alt=""></p>
+<p>在vue初始化computed属性时传入  <strong>当前实例</strong>    和 <strong>computed对象</strong></p>
+<p>1-为实例挂载<strong>_computedWatchers</strong> 属性</p>
+<p>2-设置服务端渲染标记</p>
+<p>3-循环computed中的属性</p>
+<p>   ①根据官方文档的格式 统一 计算属性表达式（getter） </p>
+<p>   ②为计算属性创建内部观察属性<strong>watcher</strong>  </p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="actionscript">_computedWatchers[key] = <span class="keyword">new</span> Watcher(  </span></span><br><span class="line"><span class="actionscript">    vm,               		<span class="comment">//实例</span></span></span><br><span class="line"><span class="actionscript">    getter || noop,         <span class="comment">//计算属性的表达式</span></span></span><br><span class="line"><span class="actionscript">    noop,                   <span class="comment">//回调函数(noop代表空函数) </span></span></span><br><span class="line"><span class="actionscript">    computedWatcherOptions  <span class="comment">// &#123;lazy：true&#125;)</span></span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>​       返回属性大致为：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line">_computedWatchers[key] = &#123;</span><br><span class="line">   deps：[]</span><br><span class="line"><span class="actionscript">   lazy：<span class="literal">true</span>,</span></span><br><span class="line"><span class="actionscript">   dirty:<span class="literal">true</span>,</span></span><br><span class="line"><span class="actionscript">   getter,         <span class="comment">//计算属性</span></span></span><br><span class="line"><span class="actionscript">   value:<span class="literal">undefined</span>  <span class="comment">//初始化值未定义</span></span></span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>4-defineComputed</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">在这个步骤里是将计算属性的 get 定为 createComputedGetter 函数</span><br></pre></td></tr></table></figure>
+
+<p><img src="C:/Users/Ideal/Desktop/vue_source-master/vue_source-master/%E8%A7%A3%E6%9E%90/image-20200423154116938.png" alt=""></p>
+<p>在模板编译阶段 用到 computed属性时执行 createComputedGetter 函数获取当前实例的_computedWatchers 属性中的计算属性</p>
+<p>第一次获取时 dirty 为 true 立即执行 watcher.evaluate()  来获取返回值 </p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line">watcher.evaluate () &#123;  </span><br><span class="line"><span class="actionscript">	<span class="keyword">this</span>.value = <span class="keyword">this</span>.get() </span></span><br><span class="line"><span class="actionscript">    <span class="keyword">this</span>.dirty = <span class="literal">false</span></span></span><br><span class="line">    &#125;</span><br><span class="line">-------------------------------函数执行后    </span><br><span class="line">_computedWatchers[key] = &#123;</span><br><span class="line">   deps：[]</span><br><span class="line"><span class="actionscript">   lazy：<span class="literal">true</span>,</span></span><br><span class="line"><span class="actionscript">   dirty:<span class="literal">false</span>,     <span class="comment">//修改dirty值</span></span></span><br><span class="line">   getter,</span><br><span class="line"><span class="actionscript">   value:value    <span class="comment">//this.get() 获取计算属性的值value  </span></span></span><br><span class="line">&#125;</span><br><span class="line"><span class="actionscript">--------------------------------在获取计算属性的值的时候执行watcher中的<span class="keyword">get</span>() </span></span><br><span class="line"><span class="javascript"> <span class="keyword">get</span> () &#123;</span></span><br><span class="line"><span class="actionscript">    pushTarget(<span class="keyword">this</span>)                  <span class="comment">//将自身设置为Dep.target</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">let</span> value</span></span><br><span class="line"><span class="actionscript">    <span class="keyword">const</span> vm = <span class="keyword">this</span>.vm</span></span><br><span class="line"><span class="actionscript">    <span class="keyword">try</span> &#123;</span></span><br><span class="line"><span class="actionscript">      value = <span class="keyword">this</span>.getter.call(vm, vm)   <span class="comment">//computed函数</span></span></span><br><span class="line">      </span><br><span class="line"><span class="actionscript"> <span class="comment">//执行computed函数时会 触发 computed 所用到的数据 </span></span></span><br><span class="line"> </span><br><span class="line"><span class="actionscript"> <span class="comment">//如果用到的数据是响应式的  数据(data中的数据)会将 Dep.target（computedWatcher）当作依赖进行收集</span></span></span><br><span class="line"> 步骤如下：</span><br><span class="line"><span class="actionscript"> <span class="number">1</span>- <span class="keyword">get</span>数据触发</span></span><br><span class="line">    dep.depend()====&gt;watcher.addDep(dep)</span><br><span class="line">    ==newDepIds.add(id)==newDeps.push(dep)==&gt;dep.addSub(watcher)</span><br><span class="line"> watcher中收集了数据的dep.id  dep.subs中收集了watcher</span><br><span class="line">      </span><br><span class="line">      </span><br><span class="line">  <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>vue</tag>
+      </tags>
   </entry>
 </search>
